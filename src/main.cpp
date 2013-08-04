@@ -28,7 +28,6 @@ int mainDemo_OGL_III();
  * Descomentando la linea elegida y comentando el resto pruebas ese ejemplo.
  */
 int main(int argc, char* argv[]) {
-
     return
     /********************************/
     /********* HELLO WORLDS *********/

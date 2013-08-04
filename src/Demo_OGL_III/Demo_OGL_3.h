@@ -24,6 +24,8 @@ private:
     static const uint32_t   WIN_HEIGHT = 768; //px
     static const uint32_t   WIN_WIDTH  = 1024; //px
     static const char*      WIN_TITLE; //px
+    static const int32_t    INST_LENGTH = 50;
+    static const int32_t    INSTANCES = INST_LENGTH*INST_LENGTH*INST_LENGTH;
     Info_Manager info;
     /***************************************************/
     /***************************************************/
@@ -33,7 +35,7 @@ private:
     float aspect;
     static const GLfloat cube_positions[];
     static const GLfloat cube_colors[];
-    static const GLfloat cube_rel_pos[];
+    GLfloat cube_rel_pos[INSTANCES*4];
     static const GLushort cube_indices[];
 
     static const vmath::vec3 X;
@@ -41,8 +43,8 @@ private:
     static const vmath::vec3 Z;
     GLuint ebo[1];
     GLuint vao[1];
-    GLuint vbo[1];
-    GLuint rel_pos_buff[1];
+    GLuint vbo[2];
+    //GLuint rel_pos_buff[1];
 
     GLuint render_prog;
     GLuint render_model_matrix_loc;
@@ -77,6 +79,8 @@ public:
 
     void SetupOpenGL();
     void InitData();
+
+    void CheckErr();
 };
 
 

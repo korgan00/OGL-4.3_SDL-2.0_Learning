@@ -23,14 +23,14 @@
 
 const char* Demo_OGL_3::WIN_TITLE = "Titulo de la Ventana";
 const GLfloat Demo_OGL_3::cube_positions[] = {
-        -1.0f, -1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f,  1.0f, 1.0f,
-        -1.0f,  1.0f, -1.0f, 1.0f,
-        -1.0f,  1.0f,  1.0f, 1.0f,
-         1.0f, -1.0f, -1.0f, 1.0f,
-         1.0f, -1.0f,  1.0f, 1.0f,
-         1.0f,  1.0f, -1.0f, 1.0f,
-         1.0f,  1.0f,  1.0f, 1.0f
+        -0.3f, -0.3f, -0.3f, 1.0f,
+        -0.3f, -0.3f,  0.3f, 1.0f,
+        -0.3f,  0.3f, -0.3f, 1.0f,
+        -0.3f,  0.3f,  0.3f, 1.0f,
+         0.3f, -0.3f, -0.3f, 1.0f,
+         0.3f, -0.3f,  0.3f, 1.0f,
+         0.3f,  0.3f, -0.3f, 1.0f,
+         0.3f,  0.3f,  0.3f, 1.0f
 };
 const GLfloat Demo_OGL_3::cube_colors[] = {
          1.0f,  1.0f,  1.0f,  1.0f,
@@ -42,7 +42,8 @@ const GLfloat Demo_OGL_3::cube_colors[] = {
          0.0f,  0.0f,  1.0f,  1.0f,
          0.5f,  0.5f,  0.5f,  1.0f
 };
-const GLfloat Demo_OGL_3::cube_rel_pos[] = {
+/*
+GLfloat Demo_OGL_3::cube_rel_pos[] = {
         -10.0f,  -10.0f,  0.0f,  1.0f,
          -5.0f,  -10.0f,  0.0f,  1.0f,
           0.0f,  -10.0f,  0.0f,  1.0f,
@@ -68,7 +69,7 @@ const GLfloat Demo_OGL_3::cube_rel_pos[] = {
           0.0f,   10.0f,  0.0f,  1.0f,
           5.0f,   10.0f,  0.0f,  1.0f,
          10.0f,   10.0f,  0.0f,  1.0f,
-};
+};//*/
 const GLushort Demo_OGL_3::cube_indices[] = {
         0, 1, 2, 3, 6, 7, 4, 5, // First strip
         0xFFFF, // <<-- This is the restart index
@@ -81,7 +82,22 @@ const vmath::vec3 Demo_OGL_3::Z(0.0f, 0.0f, 1.0f);
 
 Demo_OGL_3::Demo_OGL_3() : running(false), window(NULL), ctxt(NULL), info(),
             aspect(0), ebo(), vao(), vbo(), render_prog(0),
-            render_model_matrix_loc(0), render_projection_matrix_loc(0){}
+            render_model_matrix_loc(0), render_projection_matrix_loc(0){
+
+    for(int32_t i = 0; i < INST_LENGTH; i++){
+        for(int32_t j = 0; j < INST_LENGTH; j++){
+            for(int32_t k = 0; k < INST_LENGTH; k++){
+
+                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4] = i-INST_LENGTH/2;
+                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4+1] = j-INST_LENGTH/2;
+                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4+2] = k-INST_LENGTH/2;
+                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4+3] = 1;
+
+            }
+        }
+    }
+
+}
 
 void Demo_OGL_3::OnEvent(SDL_Event* event) {
     switch (event->type) {
@@ -140,7 +156,7 @@ void Demo_OGL_3::SetupOpenGL(){
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
     ctxt = SDL_GL_CreateContext(window);
 
-    SDL_GL_SetSwapInterval(1);
+    SDL_GL_SetSwapInterval(0);
 
     if (gl3wInit()) {
        std::cout << "Error al Inicializar GL3W" << std::endl;
@@ -197,7 +213,7 @@ void Demo_OGL_3::InitData(){
     glBindVertexArray(vao[0]);
 
     // Pedimos un buffer para el vertex buffer object
-    glGenBuffers(1, vbo);
+    glGenBuffers(2, vbo);
     // Le hacemos hueco
     glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
     // Le decimos que el hueco tiene que ser de tamaño "tamaño de cube positions"+"tamaño de cube colors"
@@ -206,11 +222,6 @@ void Demo_OGL_3::InitData(){
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(cube_positions), cube_positions );
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(cube_positions), sizeof(cube_colors), cube_colors);
 
-
-    glBindBuffer(GL_ARRAY_BUFFER, rel_pos_buff[0]);
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_rel_pos), cube_rel_pos, GL_STATIC_DRAW);
-    glVertexAttribPointer();
     // localizacion del atributo, numero de valores, tipo de valores,
     // normalizarlos, espacio entre valores, puntero al primer valor.
     // Por lo tanto decimos que nos pille los 4 primeros valores y
@@ -222,6 +233,15 @@ void Demo_OGL_3::InitData(){
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
 
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_rel_pos), cube_rel_pos, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(2);
+    glVertexAttribDivisor(2, 1);
+
+
     //Seleccionamos el color de fondo
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -232,9 +252,12 @@ void Demo_OGL_3::InitData(){
     //Funcion para el z-buffer
     glDepthFunc(GL_LESS);
 
+
     //lo que ocupa la parte en la que se dibuja.
     glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
     aspect = float(WIN_HEIGHT) / float(WIN_WIDTH);
+
+    CheckErr();
 }
 
 void Demo_OGL_3::OnRender() {
@@ -249,12 +272,13 @@ void Demo_OGL_3::OnRender() {
     glUseProgram(render_prog);
 
     // Calculamos la matriz modelo
-    vmath::mat4 model_matrix(vmath::translate(0.0f, 0.0f, -15.0f) *
+    vmath::mat4 model_matrix(vmath::translate(0.0f, 0.0f, -60.0f) *
                                 vmath::rotate(t * 360.0f, Y) *
                                 vmath::rotate(t * 720.0f, Z));
 
     // Calculamos la matriz de proyección mediante un frustum
     vmath::mat4 projection_matrix(vmath::frustum(-1.0f, 1.0f, -aspect, aspect, 1.0f, 500.0f));
+
 
     // Posicion en el shader, cantidad de matrices, es traspuesta? , matriz a setear.
     // Guardamos las dos matrices en el shader para que dibuje.
@@ -277,13 +301,15 @@ void Demo_OGL_3::OnRender() {
     // Dibujamos como triangle strip (aprovechamos los dos vertices
     // anteriores para dibujar el siguiente triangulo)
     // un total de 17 indices y de tipo unsigned short sin offset (NULL)
-    glDrawElements(GL_TRIANGLE_STRIP, 17, GL_UNSIGNED_SHORT, NULL);
+    glDrawElementsInstanced(GL_TRIANGLE_STRIP, 17, GL_UNSIGNED_SHORT, NULL, INSTANCES);
+
+
 #else
     //Dibujamos un strip y otro.
     // Without primitive restart, we need to call two draw commands
-    glDrawElements(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT, NULL);
-    glDrawElements(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT,
-            (const GLvoid *)(9 * sizeof(GLushort)));
+    glDrawElementsInstanced(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT, NULL, 25);
+    glDrawElementsInstanced(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT,
+            (const GLvoid *)(9 * sizeof(GLushort)), 25);
 #endif
     // Buffer swap
     SDL_GL_SwapWindow(window);
@@ -292,6 +318,11 @@ void Demo_OGL_3::OnRender() {
 
 
 
+void Demo_OGL_3::CheckErr() {
+    GLenum err = glGetError();
+    if ( err != GL_NO_ERROR )
+        std::cerr << "Error: " <<err;
+}
 
 
 
