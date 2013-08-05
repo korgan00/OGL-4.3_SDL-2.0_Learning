@@ -15,16 +15,17 @@
 #include "LoadShaders.h"
 #include "../Utils/Info_Manager.h"
 
+
 class Demo_OGL_3 {
 private:
     bool running;
     SDL_Window* window;
     SDL_GLContext ctxt;
 
-    static const uint32_t   WIN_HEIGHT = 768; //px
-    static const uint32_t   WIN_WIDTH  = 1024; //px
+    static const uint32_t   WIN_HEIGHT = 900; //px
+    static const uint32_t   WIN_WIDTH  = 1700; //px
     static const char*      WIN_TITLE; //px
-    static const int32_t    INST_LENGTH = 50;
+    static const int32_t    INST_LENGTH = 10;
     static const int32_t    INSTANCES = INST_LENGTH*INST_LENGTH*INST_LENGTH;
     Info_Manager info;
     /***************************************************/
@@ -35,12 +36,13 @@ private:
     float aspect;
     static const GLfloat cube_positions[];
     static const GLfloat cube_colors[];
-    GLfloat cube_rel_pos[INSTANCES*4];
+    GLfloat cube_rel_pos[INSTANCES*3];
     static const GLushort cube_indices[];
 
     static const vmath::vec3 X;
     static const vmath::vec3 Y;
     static const vmath::vec3 Z;
+    static const GLfloat VELOCITY = 0.01f;
     GLuint ebo[1];
     GLuint vao[1];
     GLuint vbo[2];
@@ -49,6 +51,15 @@ private:
     GLuint render_prog;
     GLuint render_model_matrix_loc;
     GLuint render_projection_matrix_loc;
+
+    GLfloat posX;
+    GLfloat posY;
+    GLfloat posZ;
+    GLfloat velocityXn;
+    GLfloat velocityZn;
+    GLfloat velocityXp;
+    GLfloat velocityZp;
+    GLfloat lastFrameTime;
 
 public:
 

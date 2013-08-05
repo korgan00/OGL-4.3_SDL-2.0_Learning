@@ -82,16 +82,19 @@ const vmath::vec3 Demo_OGL_3::Z(0.0f, 0.0f, 1.0f);
 
 Demo_OGL_3::Demo_OGL_3() : running(false), window(NULL), ctxt(NULL), info(),
             aspect(0), ebo(), vao(), vbo(), render_prog(0),
-            render_model_matrix_loc(0), render_projection_matrix_loc(0){
+            render_model_matrix_loc(0), render_projection_matrix_loc(0),
+            posX(0.0f), posY(0.0f), posZ(-2.0f), velocityXn(0.0f),
+            velocityZn(0.0f), velocityXp(0.0f), velocityZp(0.0f),
+            lastFrameTime(GetTickCount()){
 
     for(int32_t i = 0; i < INST_LENGTH; i++){
         for(int32_t j = 0; j < INST_LENGTH; j++){
             for(int32_t k = 0; k < INST_LENGTH; k++){
 
-                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4] = i-INST_LENGTH/2;
-                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4+1] = j-INST_LENGTH/2;
-                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4+2] = k-INST_LENGTH/2;
-                cube_rel_pos[i*4*INST_LENGTH*INST_LENGTH+j*4*INST_LENGTH+k*4+3] = 1;
+                cube_rel_pos[i*3*INST_LENGTH*INST_LENGTH+j*3*INST_LENGTH+k*3] = i-INST_LENGTH/2;
+                cube_rel_pos[i*3*INST_LENGTH*INST_LENGTH+j*3*INST_LENGTH+k*3+1] = j-INST_LENGTH/2;
+                cube_rel_pos[i*3*INST_LENGTH*INST_LENGTH+j*3*INST_LENGTH+k*3+2] = -k;
+                //cube_rel_pos[i*3*INST_LENGTH*INST_LENGTH+j*3*INST_LENGTH+k*4+3] = 1;
 
             }
         }
@@ -101,8 +104,38 @@ Demo_OGL_3::Demo_OGL_3() : running(false), window(NULL), ctxt(NULL), info(),
 
 void Demo_OGL_3::OnEvent(SDL_Event* event) {
     switch (event->type) {
+        case SDL_KEYDOWN:
+            switch(event->key.keysym.sym){
+                case SDLK_w:
+                    velocityZp = VELOCITY;
+                    break;
+                case SDLK_a:
+                    velocityXp = VELOCITY;
+                    break;
+                case SDLK_s:
+                    velocityZn = VELOCITY;
+                    break;
+                case SDLK_d:
+                    velocityXn = VELOCITY;
+                    break;
+                default:
+                    break;
+            }
+            break;
         case SDL_KEYUP:
             switch(event->key.keysym.sym){
+                case SDLK_w:
+                    velocityZp = 0.0f;
+                    break;
+                case SDLK_a:
+                    velocityXp = 0.0f;
+                    break;
+                case SDLK_s:
+                    velocityZn = 0.0f;
+                    break;
+                case SDLK_d:
+                    velocityXn = 0.0f;
+                    break;
                 case SDLK_v:
                     std::cout << info.client_info() << std::endl << std::endl;
                     break;
@@ -120,13 +153,19 @@ void Demo_OGL_3::OnEvent(SDL_Event* event) {
             break;
     }
 }
-void Demo_OGL_3::OnLoop() {}
+void Demo_OGL_3::OnLoop() {
+    GLfloat now = GetTickCount();
+    GLfloat elapsedTime = now - lastFrameTime;
+    posX += (velocityXp - velocityXn) * elapsedTime;
+    posZ += (velocityZp - velocityZn) * elapsedTime;
+    lastFrameTime = now;
+}
 
 void Demo_OGL_3::OnCleanup() {
     glUseProgram(0);
     glDeleteProgram(render_prog);
     glDeleteVertexArrays(1, vao);
-    glDeleteBuffers(1, vbo);
+    glDeleteBuffers(2, vbo);
     SDL_GL_DeleteContext(ctxt);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -156,7 +195,7 @@ void Demo_OGL_3::SetupOpenGL(){
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
     ctxt = SDL_GL_CreateContext(window);
 
-    SDL_GL_SetSwapInterval(0);
+    SDL_GL_SetSwapInterval(1);
 
     if (gl3wInit()) {
        std::cout << "Error al Inicializar GL3W" << std::endl;
@@ -187,7 +226,7 @@ void Demo_OGL_3::InitData(){
     // Seleccionamos los shaders que queremos cargar
     ShaderInfo shaders[] = {
          { GL_VERTEX_SHADER, "Resources/Demo_OGL_III/primitive_restart.vs.glsl" },
-         { GL_FRAGMENT_SHADER, "Resources/Demo_OGL_III/primitive_restart.fs.glsl" },
+         { GL_FRAGMENT_SHADER, "Resources/Demo_OGL_III/fog.fs.glsl" },
          { GL_NONE, NULL }
     };
     // Cargamos los shaders
@@ -237,7 +276,7 @@ void Demo_OGL_3::InitData(){
     glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(cube_rel_pos), cube_rel_pos, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(2);
     glVertexAttribDivisor(2, 1);
 
@@ -272,7 +311,7 @@ void Demo_OGL_3::OnRender() {
     glUseProgram(render_prog);
 
     // Calculamos la matriz modelo
-    vmath::mat4 model_matrix(vmath::translate(0.0f, 0.0f, -60.0f) *
+    vmath::mat4 model_matrix(vmath::translate(posX, posY, posZ) *
                                 vmath::rotate(t * 360.0f, Y) *
                                 vmath::rotate(t * 720.0f, Z));
 
@@ -307,9 +346,9 @@ void Demo_OGL_3::OnRender() {
 #else
     //Dibujamos un strip y otro.
     // Without primitive restart, we need to call two draw commands
-    glDrawElementsInstanced(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT, NULL, 25);
+    glDrawElementsInstanced(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT, NULL, INSTANCES);
     glDrawElementsInstanced(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT,
-            (const GLvoid *)(9 * sizeof(GLushort)), 25);
+            (const GLvoid *)(9 * sizeof(GLushort)), INSTANCES);
 #endif
     // Buffer swap
     SDL_GL_SwapWindow(window);
