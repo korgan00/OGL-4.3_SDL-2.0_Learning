@@ -10,4 +10,4 @@ Con un poco de retraso todos los ejemplos voy a ir explicandolos en el [Blog] [1
 
 Para finalizar...
 -----------------
-Cualquier duda/sugerencia, insulto/felicitacione... al correo que esta en el blog. No prometo contestar pronto pero lo intentare :D.
+Cualquier duda/sugerencia, insulto/felicitacion... al correo que esta en el blog. No prometo contestar pronto pero lo intentare :D.
