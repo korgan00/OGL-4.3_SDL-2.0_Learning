@@ -49,8 +49,8 @@ int main(int argc, char* argv[]) {
     /********************************/
 
     //mainDemo_OGL_I()+
-    //mainDemo_OGL_II()+
-    mainDemo_OGL_III()+
+    mainDemo_OGL_II()+
+    //mainDemo_OGL_III()+
     0;
 }
 

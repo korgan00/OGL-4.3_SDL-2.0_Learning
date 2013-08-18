@@ -57,8 +57,10 @@ private:
     GLfloat posZ;
     GLfloat velocityXn;
     GLfloat velocityZn;
+    GLfloat velocityYn;
     GLfloat velocityXp;
     GLfloat velocityZp;
+    GLfloat velocityYp;
     GLfloat lastFrameTime;
 
 public:

@@ -84,7 +84,8 @@ Demo_OGL_3::Demo_OGL_3() : running(false), window(NULL), ctxt(NULL), info(),
             aspect(0), ebo(), vao(), vbo(), render_prog(0),
             render_model_matrix_loc(0), render_projection_matrix_loc(0),
             posX(0.0f), posY(0.0f), posZ(-2.0f), velocityXn(0.0f),
-            velocityZn(0.0f), velocityXp(0.0f), velocityZp(0.0f),
+            velocityZn(0.0f), velocityYn(0.0f), velocityXp(0.0f),
+            velocityZp(0.0f), velocityYp(0.0f),
             lastFrameTime(GetTickCount()){
 
     for(int32_t i = 0; i < INST_LENGTH; i++){
@@ -118,6 +119,12 @@ void Demo_OGL_3::OnEvent(SDL_Event* event) {
                 case SDLK_d:
                     velocityXn = VELOCITY;
                     break;
+                case SDLK_SPACE:
+                    velocityYp = VELOCITY;
+                    break;
+                case SDLK_LCTRL:
+                    velocityYn = VELOCITY;
+                    break;
                 default:
                     break;
             }
@@ -135,6 +142,12 @@ void Demo_OGL_3::OnEvent(SDL_Event* event) {
                     break;
                 case SDLK_d:
                     velocityXn = 0.0f;
+                    break;
+                case SDLK_SPACE:
+                    velocityYp = 0.0f;
+                    break;
+                case SDLK_LCTRL:
+                    velocityYn = 0.0f;
                     break;
                 case SDLK_v:
                     std::cout << info.client_info() << std::endl << std::endl;
@@ -158,6 +171,7 @@ void Demo_OGL_3::OnLoop() {
     GLfloat elapsedTime = now - lastFrameTime;
     posX += (velocityXp - velocityXn) * elapsedTime;
     posZ += (velocityZp - velocityZn) * elapsedTime;
+    posY += (velocityYn - velocityYp) * elapsedTime;
     lastFrameTime = now;
 }
 
@@ -225,7 +239,7 @@ int Demo_OGL_3::OnExecute() {
 void Demo_OGL_3::InitData(){
     // Seleccionamos los shaders que queremos cargar
     ShaderInfo shaders[] = {
-         { GL_VERTEX_SHADER, "Resources/Demo_OGL_III/primitive_restart.vs.glsl" },
+         { GL_VERTEX_SHADER, "Resources/Demo_OGL_III/geometry_instancing.vs.glsl" },
          { GL_FRAGMENT_SHADER, "Resources/Demo_OGL_III/fog.fs.glsl" },
          { GL_NONE, NULL }
     };

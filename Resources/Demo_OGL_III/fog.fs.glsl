@@ -1,5 +1,5 @@
 #version 430
-#define DARKNESS_FACTOR 1.0f
+#define DARKNESS_FACTOR 0.8f
 in vec4 vs_fs_color;
 
 layout (location = 0) out vec4 color;
