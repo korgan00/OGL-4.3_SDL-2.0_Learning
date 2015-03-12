@@ -8,10 +8,8 @@
 #ifndef DEMO_OGL_I_H_
 #define DEMO_OGL_I_H_
 #include <iostream>
-#include <GL/gl3w.h>
-#include <GL/gl.h>
-#include "SDL2/SDL.h"
-#include "LoadShaders.h"
+
+#include "../Utils/SDL_OGL_GL3W_Dev_GeneralInclude.h"
 
 class Demo_OGL_1 {
 private:
@@ -19,8 +17,8 @@ private:
     SDL_Window* window;
     SDL_GLContext ctxt;
 
-    static const uint32_t   WIN_HEIGHT = 512; //px
-    static const uint32_t   WIN_WIDTH  = 512; //px
+    static const uint32_t   WIN_HEIGHT = DEFAULT_WIN_HEIGHT;
+    static const uint32_t   WIN_WIDTH  = DEFAULT_WIN_WIDTH;
     static const char*      WIN_TITLE; //px
 
     /***************************************************/
@@ -30,7 +28,7 @@ private:
     GLuint  vao[1];
     GLuint  buffer[1];
 
-    static const GLuint  NumVertices = 3;
+    static const GLuint NumVertices = 3;
 public:
 
     Demo_OGL_1();

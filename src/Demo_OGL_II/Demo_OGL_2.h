@@ -8,21 +8,21 @@
 #ifndef DEMO_OGL_II_H_
 #define DEMO_OGL_II_H_
 #include <iostream>
-#include <GL/gl3w.h>
-#include <GL/gl3.h>
-#include "SDL2/SDL.h"
-#include "../../LibsNUtils/vmath.h"
-#include "LoadShaders.h"
-#include "../Utils/Info_Manager.h"
+#include <string>
+#include <sstream>
+
+#include "../Utils/SDL_OGL_GL3W_Dev_GeneralInclude.h"
+
+
 
 class Demo_OGL_2 {
 private:
     bool running;
     SDL_Window* window;
     SDL_GLContext ctxt;
-
-    static const uint32_t   WIN_HEIGHT = 768; //px
-    static const uint32_t   WIN_WIDTH  = 1024; //px
+	
+    static const uint32_t   WIN_HEIGHT = DEFAULT_WIN_HEIGHT;
+    static const uint32_t   WIN_WIDTH  = DEFAULT_WIN_WIDTH;
     static const char*      WIN_TITLE; //px
     Info_Manager info;
     /***************************************************/

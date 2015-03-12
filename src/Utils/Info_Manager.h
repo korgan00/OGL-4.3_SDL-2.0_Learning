@@ -11,9 +11,7 @@
 #include <string>
 #include <sstream>
 #include <GL/gl3w.h>
-#include <GL/gl3.h>
-#include "SDL2/SDL.h"
-#include "LoadShaders.h"
+#include "SDL.h"
 
 
 class Info_Manager {
@@ -50,7 +48,7 @@ public:
         std::string s = sstring.str();
         SDL_SetWindowTitle(window, s.c_str());
     }
-    const char* client_info(){
+    std::string client_info(){
         std::stringstream sstring;
         sstring << "--------------------------------------------------------" << std::endl
                 << " + OGL-version: " << glGetString(GL_VERSION) << std::endl
@@ -59,7 +57,7 @@ public:
                 << " + Renderer: " << glGetString(GL_RENDERER) << std::endl
                 << "--------------------------------------------------------" << std::endl;
         std::string s = sstring.str();
-        return s.c_str();
+        return s;
     }
 
 };

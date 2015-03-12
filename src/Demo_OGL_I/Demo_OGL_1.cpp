@@ -16,9 +16,6 @@
         {{  1.00, 1.00, 1.00 }, { -0.85,  0.90 }}*/
 
 #include "Demo_OGL_1.h"
-#include <GL/gl3w.h>
-#include <GL/gl.h>
-#include "LoadShaders.h"
 
 const char* Demo_OGL_1::WIN_TITLE = "Titulo de la Ventana";
 
@@ -141,9 +138,9 @@ void Demo_OGL_1::InitData()
     };
 
     VertexData vertices[NumVertices] = {
-        {{  1.00, 0.00, 0.00 }, {  0.00, 0.90 }},
-        {{  0.00, 1.00, 0.00 }, {  0.90, -0.90 }},
-        {{  0.00, 0.00, 1.00 }, { -0.90, -0.90 }}
+        {{  1.00f, 0.00f, 0.00f }, {  0.00f,  0.90f }},
+        {{  0.00f, 1.00f, 0.00f }, {  0.90f, -0.90f }},
+        {{  0.00f, 0.00f, 1.00f }, { -0.90f, -0.90f }}
 
     };
 
@@ -177,8 +174,8 @@ void Demo_OGL_1::InitData()
                   vertices, GL_STATIC_DRAW );
 
     ShaderInfo shaders[] = {
-        { GL_VERTEX_SHADER, "Resources/Demo_OGL_I/gouraud.vert" },
-        { GL_FRAGMENT_SHADER, "Resources/Demo_OGL_I/gouraud.frag" },
+        { GL_VERTEX_SHADER, "../Shaders/Demo_OGL_I/gouraud.vert" },
+        { GL_FRAGMENT_SHADER, "../Shaders/Demo_OGL_I/gouraud.frag" },
         { GL_NONE, NULL }
     };
 

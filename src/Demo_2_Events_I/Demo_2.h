@@ -11,7 +11,8 @@
 
 #ifndef DEMO_2_H_
 #define DEMO_2_H_
-#include "SDL2/SDL.h"
+
+#include "../Utils/SDL_OGL_GL3W_Dev_GeneralInclude.h"
 
 class Demo_2 {
 private:

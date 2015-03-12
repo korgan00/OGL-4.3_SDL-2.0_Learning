@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de código fuente">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de código fuente\External">
+      <UniqueIdentifier>{874d3c83-474a-4bd6-9ee6-eb6f4eb93d71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\External">
+      <UniqueIdentifier>{6b938d2f-140a-4652-9e47-801315446402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{b32b11b5-4193-4745-880f-87e40153b91d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Demo_OGL_I">
+      <UniqueIdentifier>{f3de86d6-d0e2-459b-9f6b-0fa052b9bbff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Demo_OGL_II">
+      <UniqueIdentifier>{9ce60249-1705-4e4f-afc5-4bc743f4bf62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Demo_OGL_III">
+      <UniqueIdentifier>{b56c8ffd-32c0-4d62-b15c-b39d13990f76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Demo_OGL_IV">
+      <UniqueIdentifier>{3441c70d-2143-4ab0-afe1-dcbfa933efc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Demo_OGL_V">
+      <UniqueIdentifier>{679f16d0-ad66-437b-a790-e6e49dc0bff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Demo_OGL_MESH">
+      <UniqueIdentifier>{318e8a47-cd13-4c5a-9e35-67d3a34a0d75}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_II\Demo_OGL_2.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Utils\LoadShaders.cpp">
+      <Filter>Archivos de código fuente\External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libs\gl3w\src\gl3w.c">
+      <Filter>Archivos de código fuente\External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_III\Demo_OGL_3b.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_III\Demo_OGL_3a.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_1_Simplest\Demo_1.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_2_Events_I\Demo_2.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_3_OGL_Init\Demo_3.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_I\Demo_OGL_1.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_IV\Demo_OGL_4.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_MESH\ObjLoader.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_V\Demo_OGL_5.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Demo_OGL_MESH\Demo_OGL_Mesh.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Demo_OGL_II\Demo_OGL_2.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Utils\Info_Manager.h">
+      <Filter>Archivos de encabezado\External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Utils\LoadShaders.h">
+      <Filter>Archivos de encabezado\External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Utils\vmath.h">
+      <Filter>Archivos de encabezado\External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Utils\SDL_OGL_GL3W_Dev_GeneralInclude.h">
+      <Filter>Archivos de encabezado\External</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_OGL_III\Demo_OGL_3a.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_OGL_III\Demo_OGL_3b.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_1_Simplest\Demo_1.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_2_Events_I\Demo_2.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_3_OGL_Init\Demo_3.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_OGL_I\Demo_OGL_1.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_OGL_IV\Demo_OGL_4.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_OGL_MESH\ObjLoader.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_OGL_V\Demo_OGL_5.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Demo_OGL_MESH\Demo_OGL_Mesh.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shaders\Demo_OGL_I\gouraud.frag">
+      <Filter>Shaders\Demo_OGL_I</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_I\gouraud.vert">
+      <Filter>Shaders\Demo_OGL_I</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_II\primitive_restart.fs.glsl">
+      <Filter>Shaders\Demo_OGL_II</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_II\primitive_restart.vs.glsl">
+      <Filter>Shaders\Demo_OGL_II</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_III\fog.fs.glsl">
+      <Filter>Shaders\Demo_OGL_III</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_III\geometry_instancingA.vs.glsl">
+      <Filter>Shaders\Demo_OGL_III</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_III\geometry_instancingB.vs.glsl">
+      <Filter>Shaders\Demo_OGL_III</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_III\simple.fs.glsl">
+      <Filter>Shaders\Demo_OGL_III</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_IV\fog.fs.glsl">
+      <Filter>Shaders\Demo_OGL_IV</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_IV\geometry_instancingA.vs.glsl">
+      <Filter>Shaders\Demo_OGL_IV</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_IV\simple.fs.glsl">
+      <Filter>Shaders\Demo_OGL_IV</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_IV\geometry_instancingB.vs.glsl">
+      <Filter>Shaders\Demo_OGL_IV</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_V\primitive_restart.fs.glsl">
+      <Filter>Shaders\Demo_OGL_V</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_V\primitive_restart.vs.glsl">
+      <Filter>Shaders\Demo_OGL_V</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_V\primitive_restart2.fs.glsl">
+      <Filter>Shaders\Demo_OGL_V</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart.fs.glsl">
+      <Filter>Shaders\Demo_OGL_MESH</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart.vs.glsl">
+      <Filter>Shaders\Demo_OGL_MESH</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart2.fs.glsl">
+      <Filter>Shaders\Demo_OGL_MESH</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+</Project>

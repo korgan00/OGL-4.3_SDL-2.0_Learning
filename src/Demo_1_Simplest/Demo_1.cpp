@@ -10,7 +10,6 @@
  */
 
 #include "Demo_1.h"
-#include <iostream>
 
 Demo_1::Demo_1(): mainwindow(0), running(false){}
 

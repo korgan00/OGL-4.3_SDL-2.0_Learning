@@ -12,14 +12,7 @@
  *
  */
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include "Demo_OGL_2.h"
-#include "../../LibsNUtils/vmath.h"
-#include <GL/gl3w.h>
-#include <GL/gl.h>
-#include "LoadShaders.h"
 
 const char* Demo_OGL_2::WIN_TITLE = "Titulo de la Ventana";
 const GLfloat Demo_OGL_2::cube_positions[] = {
@@ -53,15 +46,18 @@ const vmath::vec3 Demo_OGL_2::Y(0.0f, 1.0f, 0.0f);
 const vmath::vec3 Demo_OGL_2::Z(0.0f, 0.0f, 1.0f);
 
 Demo_OGL_2::Demo_OGL_2() : running(false), window(NULL), ctxt(NULL), info(),
-            aspect(0), ebo(), vao(), vbo(), render_prog(0),
-            render_model_matrix_loc(0), render_projection_matrix_loc(0){}
+            aspect(0), render_prog(0),
+            render_model_matrix_loc(0), render_projection_matrix_loc(0){
+	ebo[0] = vao[0] = vbo[0] = -1;
+}
 
 void Demo_OGL_2::OnEvent(SDL_Event* event) {
     switch (event->type) {
         case SDL_KEYUP:
             switch(event->key.keysym.sym){
                 case SDLK_v:
-                    std::cout << info.client_info() << std::endl << std::endl;
+                    std::cout << std::endl;
+                    std::cout << info.client_info() << std::endl;
                     break;
                 case SDLK_ESCAPE:
                     running = false;
@@ -113,7 +109,7 @@ void Demo_OGL_2::SetupOpenGL(){
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
     ctxt = SDL_GL_CreateContext(window);
 
-    SDL_GL_SetSwapInterval(1);
+    SDL_GL_SetSwapInterval(0);
 
     if (gl3wInit()) {
        std::cout << "Error al Inicializar GL3W" << std::endl;
@@ -142,11 +138,13 @@ int Demo_OGL_2::OnExecute() {
 
 void Demo_OGL_2::InitData(){
     // Seleccionamos los shaders que queremos cargar
-    ShaderInfo shaders[] = {
-         { GL_VERTEX_SHADER, "Resources/Demo_OGL_II/primitive_restart.vs.glsl" },
-         { GL_FRAGMENT_SHADER, "Resources/Demo_OGL_II/primitive_restart.fs.glsl" },
+
+	ShaderInfo shaders[] = {
+         { GL_VERTEX_SHADER, "../Shaders/Demo_OGL_II/primitive_restart.vs.glsl" },
+         { GL_FRAGMENT_SHADER, "../Shaders/Demo_OGL_II/primitive_restart.fs.glsl" },
          { GL_NONE, NULL }
     };
+
     // Cargamos los shaders
     render_prog = LoadShaders( shaders );
     // Decimos a opengl que los utilice
