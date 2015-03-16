@@ -1,3 +1,0 @@
-
-Docs de Eventos
-http://www.libsdl.org/docs/html/sdlevent.html

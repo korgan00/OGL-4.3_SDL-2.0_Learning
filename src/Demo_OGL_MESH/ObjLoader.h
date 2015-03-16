@@ -8,6 +8,7 @@
 #include <vector>
 using namespace std;
 #include "../Utils/SDL_OGL_GL3W_Dev_GeneralInclude.h"
+#include "SDL_image.h"
 
 
 class ObjLoader {
@@ -15,14 +16,15 @@ private:
 
 	typedef GLushort Face[3];
 	typedef GLfloat Vertex[3];
+	typedef GLfloat TexVertex[2];
 	typedef struct {
 		Vertex *vertex;
 		int vertexCount;
 		GLuint sizeOfVertex;
 
-		Vertex *textCoord;
-		int textCoordCount;
-		GLuint sizeOfTextCoords;
+		TexVertex *texCoord;
+		int texCoordCount;
+		GLuint sizeOfTexCoords;
 
 		Face *faces;
 		int facesCount;
@@ -31,11 +33,15 @@ private:
 		string name;
 	} Group;
 
+	SDL_Surface* texture_A;
+	GLuint texture_A_id;
+
 	std::string objFile;
 	vector<Group> groups;
 	GLuint render_prog;
 	GLuint render_model_matrix_loc;
 	GLuint render_projection_matrix_loc;
+	GLuint render_texture_loc;
 
 	GLuint ebo[1];
 	GLuint vao[1];
@@ -45,7 +51,7 @@ private:
 	void createGroup() {
 		Group g = Group();
 		g.vertexCount = 0;
-		g.textCoordCount = 0;
+		g.texCoordCount = 0;
 		g.facesCount = 0;
 
 		groups.push_back(g);
@@ -55,14 +61,14 @@ private:
 		g->vertex = new Vertex[g->vertexCount];
 		g->sizeOfVertex = g->vertexCount * sizeof(Vertex);
 
-		g->textCoord = new Vertex[g->textCoordCount];
-		g->sizeOfTextCoords = g->textCoordCount * sizeof(Vertex);
+		g->texCoord = new TexVertex[g->texCoordCount];
+		g->sizeOfTexCoords = g->texCoordCount * sizeof(TexVertex);
 
 		g->faces = new Face[g->facesCount];
 		g->sizeOfFaces = g->facesCount * sizeof(Face);
 
-		cout << g->vertexCount << "::" << g->textCoordCount << "::" << g->facesCount << endl;
-		cout << g->sizeOfVertex << ", " << g->sizeOfTextCoords << ", " << g->sizeOfFaces << endl;
+		cout << g->vertexCount << "::" << g->texCoordCount << "::" << g->facesCount << endl;
+		cout << g->sizeOfVertex << ", " << g->sizeOfTexCoords << ", " << g->sizeOfFaces << endl;
 	}
 
 

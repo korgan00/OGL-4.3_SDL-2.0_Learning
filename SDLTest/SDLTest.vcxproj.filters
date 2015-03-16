@@ -178,15 +178,12 @@
     <None Include="..\Shaders\Demo_OGL_V\primitive_restart2.fs.glsl">
       <Filter>Shaders\Demo_OGL_V</Filter>
     </None>
-    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart.fs.glsl">
-      <Filter>Shaders\Demo_OGL_MESH</Filter>
-    </None>
-    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart.vs.glsl">
-      <Filter>Shaders\Demo_OGL_MESH</Filter>
-    </None>
-    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart2.fs.glsl">
-      <Filter>Shaders\Demo_OGL_MESH</Filter>
-    </None>
     <None Include="ClassDiagram.cd" />
+    <None Include="..\Shaders\Demo_OGL_MESH\texture.fs.glsl">
+      <Filter>Shaders\Demo_OGL_MESH</Filter>
+    </None>
+    <None Include="..\Shaders\Demo_OGL_MESH\texture.vs.glsl">
+      <Filter>Shaders\Demo_OGL_MESH</Filter>
+    </None>
   </ItemGroup>
 </Project>

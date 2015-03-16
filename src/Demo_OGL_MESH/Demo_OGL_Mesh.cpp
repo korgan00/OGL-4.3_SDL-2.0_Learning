@@ -82,9 +82,15 @@ void Demo_OGL_Mesh::OnCleanup() {
 }
 
 bool Demo_OGL_Mesh::OnInit() {
+	cout << "Initializing SDL" << endl;
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		return false;
 
+	cout << "Initializing IMG" << endl;
+	if (IMG_Init(IMG_INIT_JPG) != IMG_INIT_JPG)
+		return false;
+
+	cout << "Creating a window" << endl;
 	window = SDL_CreateWindow(WIN_TITLE,
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		WIN_WIDTH, WIN_HEIGHT,
@@ -92,7 +98,9 @@ bool Demo_OGL_Mesh::OnInit() {
 	if (!window)
 		return false;
 
+	cout << "Setting up OGL" << endl;
 	SetupOpenGL();
+	cout << "Initializing OpenGL data" << endl;
 	InitData();
 
 	running = true;
@@ -142,7 +150,7 @@ void Demo_OGL_Mesh::InitData(){
 	scene.initOGLData();
 
 	//Seleccionamos el color de fondo
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
 	//Los triangulos que no se ven, ni los pinta (los triangulos que estan de espaldas)
 	glEnable(GL_CULL_FACE);
@@ -162,7 +170,7 @@ void Demo_OGL_Mesh::OnRender() {
 	float t = float(GetTickCount() & 0x1FFF) / float(0x1FFF);
 
 	// Calculamos la matriz modelo
-	vmath::mat4 model_matrix(vmath::translate(-230.0f, -30.0f, -300.0f)/* *
+	vmath::mat4 model_matrix(vmath::translate(-280.0f, 100.0f, -150.0f) * vmath::rotate(50.0f, X)/*
 									vmath::rotate(t * 360.0f, Y) *
 									vmath::rotate(t * 720.0f, Z)*/);
 	// Calculamos la matriz de proyección mediante un frustum

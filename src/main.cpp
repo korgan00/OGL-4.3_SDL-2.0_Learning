@@ -42,7 +42,7 @@ int mainDemo_OGL_Mesh();
  */
 int main(int argc, char* argv[]) {
 	return
-		demo_selector()+
+		//demo_selector()+
 		/********************************/
 		/*********** BEGINNING **********/
 		/********************************/
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 		//mainDemo_OGL_IIIB()+//Exploracion de la escena y mas cubos
 		//mainDemo_OGL_IV()+//Texturas No disponible todavia
 		//mainDemo_OGL_V()+//Texturas No disponible todavia
-		//mainDemo_OGL_Mesh()+//
+		mainDemo_OGL_Mesh()+//
     0;
 }
 
@@ -101,7 +101,7 @@ int demo_selector_menu(){
 	std::cout << std::setiosflags(std::ios::left) << std::setw(WIDTH) <<
 			"\t10. Demo_OGL_Mesh" << "Loading a Mesh." << std::endl;
 	std::cout << std::setiosflags(std::ios::left) << std::setw(8) << 
-			"\t0. Salir." << std::endl;
+			"\t0.  Salir." << std::endl;
 		
 	std::cout << std::endl;
 	std::cout << std::endl;

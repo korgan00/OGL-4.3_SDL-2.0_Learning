@@ -2,16 +2,21 @@
 #include "ObjLoader.h"
 
 void ObjLoader::load() {
+	
+
+	
+
+
 	string line;
 	GLfloat x, y, z;
 	Group *current = &(Group());
 	current->vertexCount = 0;
-	current->textCoordCount = 0;
+	current->texCoordCount = 0;
 	current->facesCount = 0;
 	int i = 0;
 
 	// OPEN FILE
-	ifstream input("../Resources/Arid.obj");
+	ifstream input("../Resources/AridSimple.obj");
 	if (!input.is_open()) {
 		cout << "Unable to open file\n";
 		return;
@@ -27,7 +32,7 @@ void ObjLoader::load() {
 			case 'v':
 				switch (line[1]) {
 					case ' ': groups.back().vertexCount++; break;
-					case 't': groups.back().textCoordCount++; break;
+					case 't': groups.back().texCoordCount++; break;
 				}
 			break;
 			case 'f': current->facesCount++; break;
@@ -70,9 +75,9 @@ void ObjLoader::load() {
 						currentVertex++;
 					break;
 					case 't':
-						groups[currentGroup].textCoord[currentTextCoord][0] = x;
-						groups[currentGroup].textCoord[currentTextCoord][1] = y;
-						groups[currentGroup].textCoord[currentTextCoord][2] = z;
+						groups[currentGroup].texCoord[currentTextCoord][0] = x;
+						groups[currentGroup].texCoord[currentTextCoord][1] = y;
+						//groups[currentGroup].textCoord[currentTextCoord][2] = z;
 						currentTextCoord++;
 					break;
 					default:;
@@ -110,13 +115,15 @@ void ObjLoader::initOGLData() {
 
 	// Seleccionamos los shaders que queremos cargar
 	ShaderInfo shaders1[] = {
-		{ GL_VERTEX_SHADER, "../Shaders/Demo_OGL_MESH/primitive_restart.vs.glsl" },
-		{ GL_FRAGMENT_SHADER, "../Shaders/Demo_OGL_MESH/primitive_restart.fs.glsl" },
+		{ GL_VERTEX_SHADER, "../Shaders/Demo_OGL_MESH/texture.vs.glsl" },
+		{ GL_FRAGMENT_SHADER, "../Shaders/Demo_OGL_MESH/texture.fs.glsl" },
 		{ GL_NONE, NULL }
 	};
 
 	render_prog = LoadShaders(shaders1);
 	glUseProgram(render_prog);
+	render_texture_loc = glGetUniformLocation(render_prog, "texture_diffuse");
+	glUniform1i(render_texture_loc, 0); //Texture unit 0 is for base images.
 	render_model_matrix_loc = glGetUniformLocation(render_prog, "model_matrix");
 	render_projection_matrix_loc = glGetUniformLocation(render_prog, "projection_matrix");
 
@@ -134,15 +141,37 @@ void ObjLoader::initOGLData() {
 	glBindVertexArray(vao[0]);
 
 	// Pedimos un buffer para el vertex buffer object
-	glGenBuffers(1, vbo);
+	glGenBuffers(2, vbo);
 	// Le hacemos hueco
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	// Le decimos que el hueco tiene que ser de tamaño "tamaño de cube positions"+"tamaño de cube colors"
-	glBufferData(GL_ARRAY_BUFFER, group.sizeOfVertex, group.vertex, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, group.sizeOfVertex + group.sizeOfTexCoords, NULL, GL_STATIC_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, group.sizeOfVertex, group.vertex);
+	glBufferSubData(GL_ARRAY_BUFFER, group.sizeOfVertex, group.sizeOfTexCoords, group.texCoord);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE, 0, (const GLvoid*)(group.sizeOfVertex));
+
 
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
+	texture_A_id = 0;
+
+	// You should probably use CSurface::OnLoad ... ;)
+	//-- and make sure the Surface pointer is good!
+	texture_A = IMG_Load("../Resources/ObjTex/QuantumArid_Diffuse_A.jpg");
+
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glGenTextures(1, &texture_A_id);
+	glBindTexture(GL_TEXTURE_2D, texture_A_id);
+	glBindSampler(0, GL_LINEAR);
+
+	int mode = GL_RGB;
+	if (texture_A->format->BytesPerPixel == 4) mode = GL_RGBA;
+
+	glTexImage2D(GL_TEXTURE_2D, 0, mode, texture_A->w, texture_A->h, 0, mode, GL_UNSIGNED_BYTE, texture_A->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 }
 
@@ -162,6 +191,9 @@ void ObjLoader::draw(vmath::mat4 model_matrix, vmath::mat4 projection_matrix) {
 	// Activamos el buffer de indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[0]);
 
+
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glBindTexture(GL_TEXTURE_2D, texture_A_id);
 
 	//Dibujamos un strip y otro.
 	// Without primitive restart, we need to call two draw commands

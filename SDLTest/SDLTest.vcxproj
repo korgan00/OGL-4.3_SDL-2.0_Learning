@@ -56,9 +56,8 @@
     <None Include="..\Shaders\Demo_OGL_IV\simple.fs.glsl" />
     <None Include="..\Shaders\Demo_OGL_I\gouraud.frag" />
     <None Include="..\Shaders\Demo_OGL_I\gouraud.vert" />
-    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart.fs.glsl" />
-    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart.vs.glsl" />
-    <None Include="..\Shaders\Demo_OGL_MESH\primitive_restart2.fs.glsl" />
+    <None Include="..\Shaders\Demo_OGL_MESH\texture.fs.glsl" />
+    <None Include="..\Shaders\Demo_OGL_MESH\texture.vs.glsl" />
     <None Include="..\Shaders\Demo_OGL_V\primitive_restart.fs.glsl" />
     <None Include="..\Shaders\Demo_OGL_V\primitive_restart.vs.glsl" />
     <None Include="..\Shaders\Demo_OGL_V\primitive_restart2.fs.glsl" />
@@ -104,7 +103,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Libs\glew-1.10.0\lib;$(SolutionDir)Libs\lib - SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
