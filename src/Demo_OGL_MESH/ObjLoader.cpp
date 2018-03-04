@@ -16,7 +16,7 @@ void ObjLoader::load() {
 	int i = 0;
 
 	// OPEN FILE
-	ifstream input("../Resources/AridSimple.obj");
+	ifstream input("../Resources/Cubo.obj");
 	if (!input.is_open()) {
 		cout << "Unable to open file\n";
 		return;
@@ -159,7 +159,7 @@ void ObjLoader::initOGLData() {
 
 	// You should probably use CSurface::OnLoad ... ;)
 	//-- and make sure the Surface pointer is good!
-	texture_A = IMG_Load("../Resources/ObjTex/QuantumArid_Diffuse_A.jpg");
+	texture_A = IMG_Load("../Resources/ObjTex/texture.jpg");
 
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glGenTextures(1, &texture_A_id);

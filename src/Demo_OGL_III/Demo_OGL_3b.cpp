@@ -179,7 +179,7 @@ void Demo_OGL_3B::SetupOpenGL(){
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
     ctxt = SDL_GL_CreateContext(window);
 
-    //SDL_GL_SetSwapInterval(1);
+    SDL_GL_SetSwapInterval(0);
 
     if (gl3wInit()) {
        std::cout << "Error al Inicializar GL3W" << std::endl;
